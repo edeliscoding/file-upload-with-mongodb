@@ -146,6 +146,7 @@ export default function Home() {
           return (
             <div className="w-1/2 p-4 flex-wrap relative">
               <Image
+                key={image._id}
                 src={image.title}
                 width="100"
                 height="100"
