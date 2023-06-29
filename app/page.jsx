@@ -3,7 +3,7 @@
 // import ImageList from "@/components/ImageList";
 import Image from "next/image";
 import useSWR from "swr";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { BsFillTrash3Fill } from "react-icons/bs";
@@ -13,7 +13,7 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 export default function Home() {
   const [postImage, setPostImage] = useState({ title: "" });
 
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState(null); //array
   const [selectedFile, setSelectedFile] = useState(null); // transform it to base64
   //   getImages();
   //   console.log(data);
@@ -34,14 +34,17 @@ export default function Home() {
     setPostImage({ ...postImage, title: base64 });
   };
 
-  const handleUpload = async () => {
-    if (postImage.title === "") alert("You must upload something");
-    return;
+  const handleUpload = async (e) => {
+    if (!postImage.title) return;
     try {
       const res = await axios.post("/api/upload", postImage);
       // console.log(postImage);
       // router.refresh();
+
       setImages([...images, postImage]);
+      // setPostImage({ ...postImage, title: "" });
+      // e.target.files[0] = null;
+      ref.current.value = "";
     } catch (error) {
       console.log(error);
     }
@@ -121,14 +124,17 @@ export default function Home() {
     });
   }
 
+  const ref = useRef();
+
   return (
     <div className="flex max-w-6xl mx-auto min-h-screen items-center justify-center">
       <div className="left w-1/2">
-        <input type="file" size="120" onChange={handleFileChange} />
+        <input type="file" size="120" onChange={handleFileChange} ref={ref} />
 
         <button
           className="px-2 py-1 bg-slate-700 rounded-lg text-white block mt-4"
           onClick={handleUpload}
+          disabled={postImage.title === "" || ref.current.value === ""}
         >
           Upload
         </button>
