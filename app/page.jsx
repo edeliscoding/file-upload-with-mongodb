@@ -144,7 +144,7 @@ export default function Home() {
         })} */}
         {images?.map((image) => {
           return (
-            <div className="w-1/2 p-4 flex-wrap relative">
+            <div key={image._id} className="w-1/2 p-4 flex-wrap relative">
               <Image
                 key={image._id}
                 src={image.title}
