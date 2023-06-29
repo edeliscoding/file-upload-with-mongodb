@@ -35,6 +35,8 @@ export default function Home() {
   };
 
   const handleUpload = async () => {
+    if (postImage.title === "") alert("You must upload something");
+    return;
     try {
       const res = await axios.post("/api/upload", postImage);
       // console.log(postImage);

@@ -82,7 +82,14 @@ export async function POST(request) {
 export async function GET() {
   await connectMongoDB();
   const files = await File.find();
-  return NextResponse.json({ files });
+  return NextResponse.json({
+    files,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
 
 export async function DELETE(request) {
