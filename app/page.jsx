@@ -129,7 +129,13 @@ export default function Home() {
   return (
     <div className="flex max-w-6xl mx-auto min-h-screen items-center justify-center">
       <div className="left w-1/2">
-        <input type="file" size="120" onChange={handleFileChange} ref={ref} />
+        <input
+          type="file"
+          size="120"
+          accept="/image/*"
+          onChange={handleFileChange}
+          ref={ref}
+        />
 
         <button
           className="px-2 py-1 bg-slate-700 rounded-lg text-white block mt-4"
